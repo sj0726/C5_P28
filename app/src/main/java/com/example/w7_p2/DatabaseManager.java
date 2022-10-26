@@ -48,14 +48,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqlInsert += " values( '" + wrongWord;
         sqlInsert += "', '" + correctWord + "' )";
         Log.d("debugging::", sqlInsert);
+
         db.execSQL( sqlInsert );
         db.close( );
     }
 
-    public void deleteByWrongWord( int wrongWord ) {
+    public void deleteByWrongWord( String wrongWord ) {
         SQLiteDatabase db = this.getWritableDatabase( );
         String sqlDelete = "delete from " + TABLE_WC;
-        sqlDelete += " where " + WRONG + " = " + wrongWord;
+        sqlDelete += " where " + WRONG + " = " + "'" + wrongWord + "'";
+        Log.d("debugging::", sqlDelete);
 
         db.execSQL( sqlDelete );
         db.close( );
@@ -65,8 +67,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sqlUpdate = "update " + TABLE_WC;
-        sqlUpdate += " set " + CORRECT + " = '" + correctWord + "', ";
-        sqlUpdate += " where " + WRONG + " = " + wrongWord;
+        sqlUpdate += " set " + CORRECT + " = '" + correctWord + "'";
+        sqlUpdate += " where " + WRONG + " = '" + wrongWord + "'";
+        Log.d("debugging::", sqlUpdate);
 
         db.execSQL( sqlUpdate );
         db.close( );
@@ -91,8 +94,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     public String[] selectByWrongWord( String wrongWord ) {
         String sqlQuery = "select * from " + TABLE_WC;
-        sqlQuery += " where " + WRONG + " = " + wrongWord;
-
+        sqlQuery += " where " + WRONG + " = " + "'" + wrongWord + "'";
+        Log.d("debugging::", sqlQuery);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sqlQuery, null);
 
